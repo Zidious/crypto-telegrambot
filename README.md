@@ -26,7 +26,7 @@ Thats it! Good to go!
 /p <coin id>
 ```
 
-More commands to com!
+More commands to come!
 
 ## Local Development
 
