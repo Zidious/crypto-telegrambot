@@ -18,6 +18,16 @@ CRYPTO_COFFEE_BOT_TOKEN="hazaar" npm start
 
 Thats it! Good to go!
 
+## BOT commands
+
+`<coin id>` pass the coin ID e.g. bitcoin and the bot will reply with all of the pricing information. This includes rank, price, 24h high, 24h low, change 24h, volume, market cap, and, ATH.
+
+```console
+/p <coin id>
+```
+
+More commands to come!
+
 ## Local Development
 
 To compile TSC without rebuilding use:
