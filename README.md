@@ -10,7 +10,7 @@ Build the project
 npm run build
 ```
 
-Set the ENV variable of your Telegram BOT (this is found via Bot Father on Telegram) and use the start command to run the bot.
+Set the ENV variable of your Telegram BOT (this is located via Bot Father on TG, you want the BOT_TOKEN) and use the start command to run the bot.
 
 ```console
 CRYPTO_COFFEE_BOT_TOKEN="hazaar" npm start
