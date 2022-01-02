@@ -14,7 +14,7 @@ export const fetchCoinMarkets = async (
   try {
     results = await gecko.coinMarkets({
       vs_currency: 'usd',
-      ids: ticker
+      ids: ticker.toLocaleLowerCase()
     })
     if (results.length === 0) {
       throw 'Unknown coin ID'
