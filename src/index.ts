@@ -1,4 +1,4 @@
-const CoinGeckoApi = require('@crypto-coffee/coingecko-api').default
+import CoinGeckoApi from '@crypto-coffee/coingecko-api'
 import { Telegraf } from 'telegraf'
 import { ICoinMarketResponse } from './types'
 import {
