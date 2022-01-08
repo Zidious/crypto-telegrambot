@@ -1,3 +1,5 @@
+import { Telegraf } from 'telegraf'
+
 export interface ICoinMarketResponse {
   id: string
   symbol: string
@@ -25,4 +27,27 @@ export interface ICoinMarketResponse {
   atl_date: string
   roi: any
   last_updated: string
+}
+
+export interface ICBBIResponse {
+  Price: object
+  PiCycle: object
+  RUPL: object
+  RHODL: object
+  Puell: object
+  Trolololo: object
+  MVRV: object
+  ReserveRisk: object
+  Wobull: object
+  HalvingToPeak: object
+  GoogleTrends: object
+  Confidence: object
+}
+
+export interface IInlineKeyboardWithUrl {
+  bot: Telegraf
+  chatId: number
+  botMessage: string
+  keyboardMesage: string
+  keyboardUrl: string
 }
