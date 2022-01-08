@@ -1,8 +1,10 @@
 const CoinGeckoApi = require('@crypto-coffee/coingecko-api').default
 import { Telegraf } from 'telegraf'
-import { ICoinMarketResponse } from './types'
+import { ICoinMarketResponse, IInlineKeyboardWithUrl } from './types'
 import {
+  buildBotMessageWithKeyboard,
   buildBotPriceMessage,
+  fetchCBBIIndicator,
   fetchCoinMarkets,
   filterUserCommand,
   markdownWrapper
@@ -14,7 +16,8 @@ const bot = new Telegraf(CRYPTO_COFFEE_BOT_TOKEN as string)
 const coinGeckoApi = new CoinGeckoApi()
 
 const commands = {
-  price: '/p'
+  price: '/p',
+  cbbi: '/cbbi'
 }
 
 bot.command('commands', ctx => {
@@ -35,6 +38,19 @@ bot.command(commands.price, async ctx => {
 
     ctx.replyWithMarkdownV2(markdownWrapper(message))
   }
+})
+
+bot.command(commands.cbbi, async ctx => {
+  const confidence = await fetchCBBIIndicator()
+  const cbbiObject: IInlineKeyboardWithUrl = {
+    bot: bot,
+    chatId: ctx.chat.id,
+    botMessage: confidence,
+    keyboardMesage: 'CBBI Website',
+    keyboardUrl: 'https://colintalkscrypto.com/cbbi/'
+  }
+
+  buildBotMessageWithKeyboard(cbbiObject)
 })
 
 bot.launch()
