@@ -79,9 +79,9 @@ export const markdownWrapper = (message: string): string => {
   return ` \`\`\` ${message} \`\`\` `
 }
 
-const CBBI = (data: object) => {
+const CBBI = (data: Record<string, number>) => {
   const key = Object.keys(data)[Object.keys(data).length - 1]
-  const value = Object.values(data)[Object.values(data).length - 1] as number
+  const value = Object.values(data)[Object.values(data).length - 1]
 
   return { key: key, value: value }
 }
@@ -98,8 +98,8 @@ export const fetchCBBIIndicator = async () => {
   ) as unknown as number
   const date = new Date(timestamp * 1000)
 
-  const botMessage = `CBBI Indicator - ${date.toDateString()} 
-   Confidence: ${confidencePercent * 100}% 
+  const botMessage = `CBBI Indicator - ${date.toDateString()}
+   Confidence: ${confidencePercent * 100}%
   `
   return botMessage
 }
