@@ -30,18 +30,18 @@ export interface ICoinMarketResponse {
 }
 
 export interface ICBBIResponse {
-  Price: object
-  PiCycle: object
-  RUPL: object
-  RHODL: object
-  Puell: object
-  Trolololo: object
-  MVRV: object
-  ReserveRisk: object
-  Wobull: object
-  HalvingToPeak: object
-  GoogleTrends: object
-  Confidence: object
+  Price: Record<string, number>
+  PiCycle: Record<string, number>
+  RUPL: Record<string, number>
+  RHODL: Record<string, number>
+  Puell: Record<string, number>
+  Trolololo: Record<string, number>
+  MVRV: Record<string, number>
+  ReserveRisk: Record<string, number>
+  Wobull: Record<string, number>
+  HalvingToPeak: Record<string, number>
+  GoogleTrends: Record<string, number>
+  Confidence: Record<string, number>
 }
 
 export interface IInlineKeyboardWithUrl {
