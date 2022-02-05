@@ -1,3 +1,4 @@
+require('dotenv').config()
 import CoinGeckoApi from '@crypto-coffee/coingecko-api'
 import { Telegraf } from 'telegraf'
 import { ICoinMarketResponse, IInlineKeyboardWithUrl } from './types'
