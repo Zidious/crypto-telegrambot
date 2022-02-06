@@ -33,6 +33,47 @@ export const createTwitterClient = (): Twitter => {
   })
 }
 
+const sendMessage = (
+  bot: Telegraf,
+  ctx: any,
+  text: string,
+  tweetURL: string
+) => {
+  const botMessage: IInlineKeyboardWithUrl = {
+    bot: bot,
+    chatId: ctx.chat.id,
+    botMessage: text,
+    keyboardMesage: '🐣 View Tweet 🐣',
+    keyboardUrl: tweetURL
+  }
+
+  buildBotMessageWithKeyboard(botMessage)
+}
+
+const sendMessageWithPhoto = (
+  text: string,
+  display_text_range: number[],
+  bot: Telegraf,
+  ctx: any,
+  tweetURL: string
+) => {
+  const image = (text as string).substring(display_text_range[1]).trim()
+  const message = (text as string).substring(
+    display_text_range[0],
+    display_text_range[1]
+  )
+  const botPhoto: IInlineKeyboardWithUrlWithPhoto = {
+    bot: bot,
+    chatId: ctx.chat.id,
+    photoUrl: image,
+    botMessage: message,
+    keyboardMesage: '🐣 View Tweet 🐣',
+    keyboardUrl: tweetURL
+  }
+
+  buildBotPhotoMessageWithKeyboard(botPhoto)
+}
+
 export const startStream = (client: Twitter, bot: Telegraf, ctx: any) => {
   const parameters = {
     follow: TWITTER_USERS_IDS
@@ -42,53 +83,57 @@ export const startStream = (client: Twitter, bot: Telegraf, ctx: any) => {
     .stream('statuses/filter', parameters)
     .on('start', () => console.log('Starting Twitter stream...'))
     .on('data', tweet => {
-      const { retweeted_status, in_reply_to_status_id, quoted_status_id } =
-        tweet
+      const {
+        retweeted_status,
+        in_reply_to_status_id,
+        quoted_status_id,
+        in_reply_to_user_id,
+        id_str,
+        text,
+        display_text_range,
+        extended_tweet
+      } = tweet
 
-      // only filter users tweeters, we do not want the bot to post
+      // only filter users tweets, we do not want the bot to post
       // deteled twets, retweets, replies or quoteed retweets
       if (
         !(
           tweet.delete ||
           retweeted_status ||
           in_reply_to_status_id ||
+          in_reply_to_user_id ||
           quoted_status_id
         )
       ) {
-        const { id_str, text, display_text_range } = tweet
+        // get screen name to build the tweeet URL
         const { screen_name } = tweet.user
-
-        // builds URL to tweet
         const tweetURL = `https://twitter.com/${screen_name}/status/${id_str}`
 
-        // tweets with image
-        if (display_text_range) {
-          const image = (text as string).substring(display_text_range[1]).trim()
-          const message = (text as string).substring(
-            display_text_range[0],
-            display_text_range[1]
-          )
-          const botPhoto: IInlineKeyboardWithUrlWithPhoto = {
-            bot: bot,
-            chatId: ctx.chat.id,
-            photoUrl: image,
-            botMessage: message,
-            keyboardMesage: '🐣 View Tweet 🐣',
-            keyboardUrl: tweetURL
-          }
+        // if tweet body > 140 characters
+        if (extended_tweet) {
+          const { full_text, entities } = extended_tweet
+          const { media } = entities
 
-          buildBotPhotoMessageWithKeyboard(botPhoto)
+          // extended tweet has an image
+          if (extended_tweet.display_text_range && media) {
+            sendMessageWithPhoto(
+              full_text,
+              extended_tweet.display_text_range,
+              bot,
+              ctx,
+              tweetURL
+            )
+          } else {
+            sendMessage(bot, ctx, full_text, tweetURL)
+          }
+          // tweet body < 140 characters
         } else {
-          // tweets without image
-          const botMessage: IInlineKeyboardWithUrl = {
-            bot: bot,
-            chatId: ctx.chat.id,
-            botMessage: text,
-            keyboardMesage: '🐣 View Tweet 🐣',
-            keyboardUrl: tweetURL
+          // tweet has an image
+          if (display_text_range) {
+            sendMessageWithPhoto(text, display_text_range, bot, ctx, tweetURL)
+          } else {
+            sendMessage(bot, ctx, text, tweetURL)
           }
-
-          buildBotMessageWithKeyboard(botMessage)
         }
       }
     })
