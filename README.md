@@ -1,6 +1,6 @@
-# Crypto Price Telegram BOT
+# Cryptocurrency Telegram BOT
 
-A Crypto price BOT built with TypeScript, Node, Telegraf and, CoinGecko API.
+A Cryptocurrency BOT built with TypeScript, Node, Telegraf and, CoinGecko API.
 
 ## Usage
 
@@ -10,10 +10,12 @@ Build the project
 npm run build
 ```
 
-Set the ENV variable of your Telegram BOT (this is located via Bot Father on TG, you want the BOT_TOKEN) and use the start command to run the bot.
+Set the `CRYPTO_COFFEE_BOT_TOKEN` ENV variable of your Telegram BOT (in your `.env` file or command line). You can find your Telegram BOT token via [BotFather](https://telegram.me/BotFather). 
+
+To start the BOT do the below command:
 
 ```console
-CRYPTO_COFFEE_BOT_TOKEN="hazaar" npm start
+npm start
 ```
 ## Twitter API Integration
 
