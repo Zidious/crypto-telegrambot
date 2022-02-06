@@ -111,10 +111,11 @@ export const startStream = (client: Twitter, bot: Telegraf, ctx: any) => {
 
         // if tweet body > 140 characters
         if (extended_tweet) {
-          const { full_text } = extended_tweet
+          const { full_text, entities } = extended_tweet
+          const { media } = entities
 
           // extended tweet has an image
-          if (extended_tweet.display_text_range) {
+          if (extended_tweet.display_text_range && media) {
             sendMessageWithPhoto(
               full_text,
               extended_tweet.display_text_range,
