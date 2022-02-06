@@ -42,8 +42,19 @@ export const startStream = (client: Twitter, bot: Telegraf, ctx: any) => {
     .stream('statuses/filter', parameters)
     .on('start', () => console.log('Starting Twitter stream...'))
     .on('data', tweet => {
-      // we only care about tweets not deleted tweets
-      if (!tweet.delete) {
+      const { retweeted_status, in_reply_to_status_id, quoted_status_id } =
+        tweet
+
+      // only filter users tweeters, we do not want the bot to post
+      // deteled twets, retweets, replies or quoteed retweets
+      if (
+        !(
+          tweet.delete ||
+          retweeted_status ||
+          in_reply_to_status_id ||
+          quoted_status_id
+        )
+      ) {
         const { id_str, text, display_text_range } = tweet
         const { screen_name } = tweet.user
 
