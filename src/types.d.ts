@@ -51,3 +51,12 @@ export interface IInlineKeyboardWithUrl {
   keyboardMesage: string
   keyboardUrl: string
 }
+
+export interface IInlineKeyboardWithUrlWithPhoto {
+  bot: Telegraf
+  chatId: number
+  photoUrl: string
+  botMessage: string
+  keyboardMesage: string
+  keyboardUrl: string
+}

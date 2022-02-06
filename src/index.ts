@@ -10,21 +10,23 @@ import {
   filterUserCommand,
   markdownWrapper
 } from './utils'
+import { createTwitterClient, startStream } from './actions/twitter'
 
 const { CRYPTO_COFFEE_BOT_TOKEN } = process.env
-
 const bot = new Telegraf(CRYPTO_COFFEE_BOT_TOKEN as string)
 const coinGeckoApi = new CoinGeckoApi()
-
 const commands = {
   price: '/p',
   cbbi: '/cbbi'
 }
+let hasTwitterStreamStarted = false
 
 bot.command('commands', ctx => {
   ctx.reply(`
     My commands: 
     /p - <coin> Fetch coin price info.
+    /cbbi - CBBI indicator (BTCs top).
+    /twitter - Start a twitter stream of user(s)
     `)
 })
 
@@ -52,6 +54,21 @@ bot.command(commands.cbbi, async ctx => {
   }
 
   buildBotMessageWithKeyboard(cbbiObject)
+})
+
+// start Twitter stream
+bot.command('/twitter', async ctx => {
+  const { message_id } = ctx.update.message
+  if (!hasTwitterStreamStarted) {
+    ctx.reply('Starting Twitter stream...')
+    ctx.deleteMessage(message_id)
+    const client = createTwitterClient()
+    hasTwitterStreamStarted = true
+    startStream(client, bot, ctx)
+  } else {
+    ctx.deleteMessage(message_id)
+    ctx.reply('Twitter stream has already started...')
+  }
 })
 
 bot.launch()
