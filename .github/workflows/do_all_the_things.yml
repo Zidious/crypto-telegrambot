@@ -18,4 +18,4 @@ jobs:
       - name: Start the BOT
         env: 
           CRYPTO_COFFEE_BOT_TOKEN: ${{secrets.CRYPTO_COFFEE_BOT_TOKEN}}
-        run: npm start
+        run: npm start &
