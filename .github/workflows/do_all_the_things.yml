@@ -8,14 +8,18 @@ jobs:
     runs-on: self-hosted
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      
+    - uses: actions/checkout@v2
       # Runs a single command using the runners shell
-      - name: Install dependencies 
-        run: npm install
-      - name: Build the BOT
-        run: npm run build
-      - name: Start the BOT
-        env: 
-          CRYPTO_COFFEE_BOT_TOKEN: ${{secrets.CRYPTO_COFFEE_BOT_TOKEN}}
-        run: npm start &
+    - name: Install dependencies 
+      run: npm install
+    - name: Build the BOT
+      run: npm run build
+    - name: SSH into PI
+      uses: appleboy/ssh-action@v0.1.4
+      with:
+        username: pi
+        password: ${{secrets.PIPASSWORD}}
+        script: |
+          whoami
+          ls -al
+    
