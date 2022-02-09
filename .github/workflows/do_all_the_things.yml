@@ -14,12 +14,12 @@ jobs:
       run: npm install
     - name: Build the BOT
       run: npm run build
-    - name: SSH into PI
-      uses: appleboy/ssh-action@v0.1.4
+    - name: Remote SSH Commands
+      uses: fifsky/ssh-action@v0.0.6
       with:
-        username: pi
-        password: ${{secrets.PIPASSWORD}}
-        script: |
+        user: pi
+        pass: ${{secrets.PIPASSWORD}}
+        command: |
           whoami
           ls -al
     
