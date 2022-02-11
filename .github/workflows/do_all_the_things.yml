@@ -11,4 +11,4 @@ jobs:
     - uses: actions/checkout@v2
       # Runs a single command using the runners shell
     - name: COPY
-      run: cp -a /home/pi/actions-runner/_work/crypto-telegrambot /home/pi/crypto-telegrambot 
+      run: sudo cp -a /home/pi/actions-runner/_work/crypto-telegrambot /home/pi/crypto-telegrambot 
