@@ -10,5 +10,5 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
       # Runs a single command using the runners shell
-    - name: COPY
-      run: sudo cp -a /home/pi/actions-runner/_work/crypto-telegrambot /home/pi/crypto-telegrambot 
+    - name: Copy all files
+      run: sudo cp -atv /home/pi/actions-runner/_work/crypto-telegrambot/* /home/pi/
