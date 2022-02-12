@@ -10,5 +10,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
       # Runs a single command using the runners shell
-    - name: Copy all files
+    - name: Pull down new build
       run: rsync -a --exclude='.*' /home/pi/actions-runner/_work/crypto-telegrambot/crypto-telegrambot /home/pi/
+    - name: Restart BOT
+      run: pm2 restart 0
