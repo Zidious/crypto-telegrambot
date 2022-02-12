@@ -1,7 +1,7 @@
 require('dotenv').config()
 import CoinGeckoApi from '@crypto-coffee/coingecko-api'
 import { Telegraf } from 'telegraf'
-import { ICoinMarketResponse, IInlineKeyboardWithUrl } from './types'
+import { ICoinMarketResponse, IBaseInlineKeyboard } from './types'
 import {
   buildBotMessageWithKeyboard,
   buildBotPriceMessage,
@@ -45,7 +45,7 @@ bot.command(commands.price, async ctx => {
 
 bot.command(commands.cbbi, async ctx => {
   const confidence = await fetchCBBIIndicator()
-  const cbbiObject: IInlineKeyboardWithUrl = {
+  const cbbiObject: IBaseInlineKeyboard = {
     bot: bot,
     chatId: ctx.chat.id,
     botMessage: confidence,

@@ -1,8 +1,8 @@
 import {
   ICBBIResponse,
   ICoinMarketResponse,
-  IInlineKeyboardWithUrl,
-  IInlineKeyboardWithUrlWithPhoto
+  IBaseInlineKeyboard,
+  IInlineKeyboardWithPhoto
 } from './types'
 import axios from 'axios'
 
@@ -69,7 +69,7 @@ export const buildBotMessageWithKeyboard = ({
   botMessage,
   keyboardMesage,
   keyboardUrl
-}: IInlineKeyboardWithUrl) => {
+}: IBaseInlineKeyboard) => {
   bot.telegram.sendMessage(chatId, botMessage, {
     reply_markup: {
       inline_keyboard: [[{ text: keyboardMesage, url: keyboardUrl }]]
@@ -84,7 +84,7 @@ export const buildBotPhotoMessageWithKeyboard = ({
   botMessage,
   keyboardMesage,
   keyboardUrl
-}: IInlineKeyboardWithUrlWithPhoto) => {
+}: IInlineKeyboardWithPhoto) => {
   bot.telegram.sendPhoto(chatId, photoUrl, {
     caption: botMessage,
     reply_markup: {
