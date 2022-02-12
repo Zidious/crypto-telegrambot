@@ -1,10 +1,7 @@
 import { assert } from 'console'
 import { Telegraf } from 'telegraf'
 import Twitter from 'twitter-lite'
-import {
-  IInlineKeyboardWithUrlWithPhoto,
-  IInlineKeyboardWithUrl
-} from '../types'
+import { IInlineKeyboardWithPhoto, IBaseInlineKeyboard } from '../types'
 import {
   buildBotMessageWithKeyboard,
   buildBotPhotoMessageWithKeyboard
@@ -39,7 +36,7 @@ const sendMessage = (
   text: string,
   tweetURL: string
 ) => {
-  const botMessage: IInlineKeyboardWithUrl = {
+  const botMessage: IBaseInlineKeyboard = {
     bot: bot,
     chatId: ctx.chat.id,
     botMessage: text,
@@ -62,7 +59,7 @@ const sendMessageWithPhoto = (
     display_text_range[0],
     display_text_range[1]
   )
-  const botPhoto: IInlineKeyboardWithUrlWithPhoto = {
+  const botPhoto: IInlineKeyboardWithPhoto = {
     bot: bot,
     chatId: ctx.chat.id,
     photoUrl: image,

@@ -44,7 +44,7 @@ export interface ICBBIResponse {
   Confidence: Record<string, number>
 }
 
-export interface IInlineKeyboardWithUrl {
+export interface IBaseInlineKeyboard {
   bot: Telegraf
   chatId: number
   botMessage: string
@@ -52,11 +52,6 @@ export interface IInlineKeyboardWithUrl {
   keyboardUrl: string
 }
 
-export interface IInlineKeyboardWithUrlWithPhoto {
-  bot: Telegraf
-  chatId: number
+export interface IInlineKeyboardWithPhoto extends IBaseInlineKeyboard {
   photoUrl: string
-  botMessage: string
-  keyboardMesage: string
-  keyboardUrl: string
 }
