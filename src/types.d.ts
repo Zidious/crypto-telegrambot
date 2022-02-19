@@ -55,3 +55,11 @@ export interface IBaseInlineKeyboard {
 export interface IInlineKeyboardWithPhoto extends IBaseInlineKeyboard {
   photoUrl: string
 }
+
+export interface IMessageParams {
+  text: string
+  display_text_range?: number[]
+  bot: Telegraf
+  ctx: any
+  tweetURL: string
+}
