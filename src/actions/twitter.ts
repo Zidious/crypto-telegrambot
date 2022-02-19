@@ -1,7 +1,11 @@
 import { assert } from 'console'
 import { Telegraf } from 'telegraf'
 import Twitter from 'twitter-lite'
-import { IInlineKeyboardWithPhoto, IBaseInlineKeyboard } from '../types'
+import {
+  IInlineKeyboardWithPhoto,
+  IBaseInlineKeyboard,
+  IMessageParams
+} from '../types'
 import {
   buildBotMessageWithKeyboard,
   buildBotPhotoMessageWithKeyboard
@@ -30,12 +34,7 @@ export const createTwitterClient = (): Twitter => {
   })
 }
 
-const sendMessage = (
-  bot: Telegraf,
-  ctx: any,
-  text: string,
-  tweetURL: string
-) => {
+const sendMessage = ({ bot, ctx, text, tweetURL }: IMessageParams) => {
   const botMessage: IBaseInlineKeyboard = {
     bot: bot,
     chatId: ctx.chat.id,
@@ -47,17 +46,17 @@ const sendMessage = (
   buildBotMessageWithKeyboard(botMessage)
 }
 
-const sendMessageWithPhoto = (
-  text: string,
-  display_text_range: number[],
-  bot: Telegraf,
-  ctx: any,
-  tweetURL: string
-) => {
-  const image = (text as string).substring(display_text_range[1]).trim()
+const sendMessageWithPhoto = ({
+  bot,
+  ctx,
+  text,
+  tweetURL,
+  display_text_range
+}: IMessageParams) => {
+  const image = (text as string).substring(display_text_range![1]).trim()
   const message = (text as string).substring(
-    display_text_range[0],
-    display_text_range[1]
+    display_text_range![0],
+    display_text_range![1]
   )
   const botPhoto: IInlineKeyboardWithPhoto = {
     bot: bot,
@@ -113,23 +112,29 @@ export const startStream = (client: Twitter, bot: Telegraf, ctx: any) => {
 
           // extended tweet has an image
           if (extended_tweet.display_text_range && media) {
-            sendMessageWithPhoto(
-              full_text,
-              extended_tweet.display_text_range,
+            sendMessageWithPhoto({
+              text: full_text,
+              display_text_range: extended_tweet.display_text_range,
               bot,
               ctx,
               tweetURL
-            )
+            })
           } else {
-            sendMessage(bot, ctx, full_text, tweetURL)
+            sendMessage({ bot, ctx, text: full_text, tweetURL })
           }
           // tweet body < 140 characters
         } else {
           // tweet has an image
           if (display_text_range) {
-            sendMessageWithPhoto(text, display_text_range, bot, ctx, tweetURL)
+            sendMessageWithPhoto({
+              text,
+              display_text_range,
+              bot,
+              ctx,
+              tweetURL
+            })
           } else {
-            sendMessage(bot, ctx, text, tweetURL)
+            sendMessage({ bot, ctx, text, tweetURL })
           }
         }
       }
