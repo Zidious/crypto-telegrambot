@@ -11,6 +11,7 @@ import {
   markdownWrapper
 } from './utils'
 import { createTwitterClient, startStream } from './actions/twitter'
+import { blacklistedWordChecks } from './actions/blacklisted-words'
 
 const { CRYPTO_COFFEE_BOT_TOKEN } = process.env
 const bot = new Telegraf(CRYPTO_COFFEE_BOT_TOKEN as string)
@@ -70,5 +71,7 @@ bot.command('/twitter', async ctx => {
     ctx.reply('Twitter stream has already started...')
   }
 })
+
+blacklistedWordChecks(bot)
 
 bot.launch()
