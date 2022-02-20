@@ -121,3 +121,7 @@ export const fetchCBBIIndicator = async () => {
   `
   return botMessage
 }
+
+export const splitUserArgs = (args: string) => {
+  return args.split(',')
+}
