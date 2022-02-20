@@ -2,7 +2,7 @@
 
 > A Cryptocurrency BOT built with TypeScript, Node, Telegraf and, CoinGecko API.
 
-A Telegram BOT whichs integrates the Telegram API, CoinGecko API and had a lot of cool features. Please read below:
+A Telegram BOT whichs integrates the Telegram API, CoinGecko API and has a lot of cool features. Please read below:
 
 ## Usage
 
@@ -16,6 +16,10 @@ Set the `CRYPTO_COFFEE_BOT_TOKEN` ENV variable of your Telegram BOT (in your `.e
 
 To start the BOT do the below command:
 
+```console
+npm start
+```
+
 ## BOT commands
 
 ### Price Command
@@ -25,10 +29,6 @@ To start the BOT do the below command:
 `/cbbi` - Displays the CBBI confidence percentage, an indicator to calculate how confident bitcoin has reached its top. More information on the CBBI indicator can be found here: [CBBI website](https://colintalkscrypto.com/cbbi/)
 
 `/twitter` - Please see [Twitter API Integration](#twitter-api-integration)
-
-```console
-npm start
-```
 
 ## Twitter API Integration
 
