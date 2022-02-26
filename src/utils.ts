@@ -5,6 +5,7 @@ import {
   IInlineKeyboardWithPhoto
 } from './types'
 import axios from 'axios'
+import CoinGeckoAPI from '@crypto-coffee/coingecko-api'
 
 export const filterUserCommand = (command: string, { update }: any): string => {
   const { message } = update
@@ -12,7 +13,7 @@ export const filterUserCommand = (command: string, { update }: any): string => {
 }
 
 export const fetchCoinMarkets = async (
-  gecko: any,
+  gecko: CoinGeckoAPI,
   ticker: string,
   ctx: any
 ): Promise<string[]> => {
@@ -34,6 +35,60 @@ export const fetchCoinMarkets = async (
   return results
 }
 
+export const fetchCompanies = async (ctx: any, gecko: CoinGeckoAPI) => {
+  let resultsBtc
+  try {
+    resultsBtc = await gecko.companies('bitcoin')
+
+    ctx.replyWithMarkdown(`
+    ***Top Companies Holdings (Bitcoin)*** \n
+    ***Bitcoin***
+    ${getCompanyBase(resultsBtc)}
+    ***Companies***
+    ${getCompanyData(resultsBtc.companies[0], 1)}
+    ${getCompanyData(resultsBtc.companies[1], 2)}
+    ${getCompanyData(resultsBtc.companies[2], 3)}
+    `)
+  } catch (error) {
+    ctx.replyWithMarkdown(
+      `${error} If needed, please submit issue to: https://github.com/Zidious/crypto-telegrambot`
+    )
+  }
+}
+
+const getCompanyBase = (result: Record<string, string | number>): string => {
+  return `
+  Total Holdings: ${result.total_holdings} 
+  Total Value (USD): ${formatCurrency.format(result.total_value_usd as number)} 
+  Market Cap Dominance (%): ${(result.market_cap_dominance as number).toFixed(
+    2
+  )}% 
+  `
+}
+const getCompanyData = (
+  companies: Record<string, string | number>,
+  index: number
+): string => {
+  return `
+  ***#${index}*** - ${companies.name}
+
+  Symbol: ${companies.symbol} 
+  Country: ${companies.country}
+  Total Holdings (BTC): ${companies.total_holdings} 
+  Total Entry Value (USD): ${formatCurrency.format(
+    companies.total_entry_value_usd as number
+  )} 
+  Total Current Value (USD): ${formatCurrency.format(
+    companies.total_current_value_usd as number
+  )} 
+  `
+}
+
+const formatCurrency = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD'
+})
+
 export const buildBotPriceMessage = ({
   symbol,
   market_cap_rank,
@@ -45,10 +100,6 @@ export const buildBotPriceMessage = ({
   market_cap,
   ath
 }: ICoinMarketResponse): string => {
-  const formatCurrency = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD'
-  })
   const botMessage = `
   Symbol: ${symbol?.toLocaleUpperCase()}
   Rank: #${market_cap_rank ? market_cap_rank : 'NA'}

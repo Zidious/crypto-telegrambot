@@ -7,6 +7,7 @@ import {
   buildBotPriceMessage,
   fetchCBBIIndicator,
   fetchCoinMarkets,
+  fetchCompanies,
   filterUserCommand,
   markdownWrapper
 } from './utils'
@@ -18,7 +19,8 @@ const bot = new Telegraf(CRYPTO_COFFEE_BOT_TOKEN as string)
 const coinGeckoApi = new CoinGeckoApi()
 const commands = {
   price: '/p',
-  cbbi: '/cbbi'
+  cbbi: '/cbbi',
+  companies: '/companies'
 }
 let hasTwitterStreamStarted = false
 
@@ -27,7 +29,8 @@ bot.command('commands', ctx => {
     My commands: 
     /p - <coin> Fetch coin price info.
     /cbbi - CBBI indicator (BTCs top).
-    /twitter - Start a twitter stream of user(s)
+    /companies - list top 3 companies and stats holding bitcoin.
+    /twitter - Start a twitter stream of user(s).
     `)
 })
 
@@ -55,6 +58,10 @@ bot.command(commands.cbbi, async ctx => {
   }
 
   buildBotMessageWithKeyboard(cbbiObject)
+})
+
+bot.command(commands.companies, async ctx => {
+  fetchCompanies(ctx, coinGeckoApi)
 })
 
 // start Twitter stream

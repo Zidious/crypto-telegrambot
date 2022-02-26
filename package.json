@@ -31,7 +31,7 @@
     "bot"
   ],
   "devDependencies": {
-    "@crypto-coffee/coingecko-api": "^1.0.1-canary-418a47a.0",
+    "@crypto-coffee/coingecko-api": "^1.0.1-canary-1adf9c3.0",
     "@types/bad-words": "^3.0.1",
     "@types/chai": "^4.2.22",
     "@types/mocha": "^9.0.0",
