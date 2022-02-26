@@ -29,11 +29,19 @@ npm start
 
 ## BOT commands
 
-### Price Command
+### Price and Stats
 
 `/p <coin id>` - The `<coin id>` represents the coin ID e.g. bitcoin and the bot will reply with all of the pricing information. This includes rank, price, 24h high, 24h low, change 24h, volume, market cap, and, ATH.
 
+### CBBI
+
 `/cbbi` - Displays the CBBI confidence percentage, an indicator to calculate how confident bitcoin has reached its top. More information on the CBBI indicator can be found here: [CBBI website](https://colintalkscrypto.com/cbbi/)
+
+### Companies
+
+`/companies` - Will list the `total_holdings, total_value_usd, market_cap_dominance` and top 3 companies holding Bitcoin.
+
+### Twitter
 
 `/twitter` - Please see [Twitter API Integration](#twitter-api-integration)
 
