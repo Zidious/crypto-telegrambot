@@ -4,6 +4,13 @@
 
 A Telegram BOT whichs integrates the Telegram API, CoinGecko API and has a lot of cool features. Please read below:
 
+## Table of Contents
+
+1. [Usage](#usage)
+2. [BOT Commands](#bot-commands)
+3. [Twitter API Integration](#twitter-api-integration)
+4. [Blacklisted Words](#blacklisted-words)
+
 ## Usage
 
 Build the project
